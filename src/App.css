@@ -1,0 +1,180 @@
+.volume-slider-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  background: #232b3a;
+  border-radius: 6px;
+  padding: 0.3em 0.8em;
+}
+input[type="range"] {
+  accent-color: #61dafb;
+  height: 2px;
+}
+.button-group {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 1.2rem;
+  margin: 1.5rem auto 0 auto;
+  padding: 0.5rem 0;
+  width: 100%;
+  max-width: 900px;
+}
+.control-btn {
+  background: #232b3a;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.4em 1.1em;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.control-btn:disabled {
+  background: #444a5a;
+  color: #aaa;
+  cursor: not-allowed;
+}
+.control-btn:hover:not(:disabled) {
+  background: #3a4660;
+}
+.resource-btn {
+  background: #232b3a;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.4em 1.1em;
+  font-size: 1em;
+  margin-bottom: 0.2em;
+  margin-left: 0.2em;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.resource-btn:hover {
+  background: #3a4660;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.modal-content {
+  background: #232b3a;
+  color: #fff;
+  padding: 2em 2.5em;
+  border-radius: 12px;
+  box-shadow: 0 4px 32px rgba(0,0,0,0.25);
+  min-width: 320px;
+  max-width: 90vw;
+  text-align: center;
+}
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+
+.jigsaw-app {
+  position: relative;
+  width: 100vw;
+  min-height: 100vh;
+  max-width: 1280px;
+  margin: 0 auto;
+  background: #181c24;
+  color: #fff;
+  box-sizing: border-box;
+  padding: 1.5rem 0.5rem 1.5rem 0.5rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.main-flex {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 2rem;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+
+.puzzle-container-responsive {
+  flex: 1 1 0;
+  max-width: 700px;
+  min-width: 320px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+
+.controls.side-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  align-items: flex-end;
+  margin-top: 2rem;
+  margin-right: 2vw;
+}
+
+
+.progress {
+  margin-top: 1.2rem;
+  font-size: 1.1rem;
+  color: #a0a0a0;
+}
