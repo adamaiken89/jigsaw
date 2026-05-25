@@ -18,7 +18,7 @@ function App() {
   const [completed, setCompleted] = useState(Array(puzzles.length).fill(false));
   const [musicMuted, setMusicMuted] = useState(false);
   const [musicVolume, setMusicVolume] = useState(1);
-  const [musicUrl] = useState(() => musicTracks[Math.floor(Math.random() * musicTracks.length)]);
+  const [musicUrl, setMusicUrl] = useState(() => musicTracks[Math.floor(Math.random() * musicTracks.length)]);
   const [musicStarted, setMusicStarted] = useState(false);
   const [puzzleStarted, setPuzzleStarted] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -27,12 +27,13 @@ function App() {
     if (audioRef.current) {
       audioRef.current.muted = musicMuted;
       audioRef.current.volume = musicVolume;
-      if (!puzzleStarted || completed[currentPuzzle]) {
+      // Only pause/stop music if puzzle hasn't started
+      if (!puzzleStarted) {
         audioRef.current.pause();
         audioRef.current.currentTime = 0;
       }
     }
-  }, [musicMuted, musicVolume, puzzleStarted, completed, currentPuzzle]);
+  }, [musicMuted, musicVolume, puzzleStarted]);
 
   // Start music after first user interaction
   const startMusic = () => {
@@ -57,8 +58,18 @@ function App() {
 
   const handleNext = () => {
     if (currentPuzzle < puzzles.length - 1 && completed[currentPuzzle]) {
+      // Pick a new random music track for the next puzzle
+      const nextMusic = musicTracks[Math.floor(Math.random() * musicTracks.length)];
+      setMusicUrl(nextMusic);
       setCurrentPuzzle(currentPuzzle + 1);
       setPuzzleStarted(false);
+      // Play the new music if already started
+      setTimeout(() => {
+        if (audioRef.current && musicStarted) {
+          audioRef.current.load();
+          audioRef.current.play().catch(() => {});
+        }
+      }, 0);
     }
   };
 

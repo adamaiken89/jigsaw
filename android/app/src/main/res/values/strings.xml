@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Jigsaw Puzzle</string>
+    <string name="puzzle_completed">Puzzle Completed!</string>
+    <string name="next_puzzle">Next Puzzle</string>
+    <string name="previous_puzzle">Previous</string>
+    <string name="start_puzzle">Start Puzzle</string>
+    <string name="select_puzzle">Select a Puzzle</string>
+    <string name="music_playing">Now Playing</string>
+    <string name="mute">Mute</string>
+    <string name="unmute">Unmute</string>
+    <string name="puzzle_grid">%1$d x %1$d Grid</string>
+</resources>

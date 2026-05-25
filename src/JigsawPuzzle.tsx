@@ -56,9 +56,9 @@ const JigsawPuzzle: React.FC<JigsawPuzzleProps> = ({ image, size = 3, onComplete
   };
   const handleDragOver = (e: React.DragEvent) => e.preventDefault();
 
-  // Render grid of pieces and completion message
   // Responsive area size: fit to viewport, max 90vw/80vh
   const computedAreaSize = areaSize || Math.min(window.innerWidth * 0.9, window.innerHeight * 0.8);
+
   return (
     <div style={{ position: 'relative', width: computedAreaSize, height: computedAreaSize + 20, margin: '0 auto' }}>
       <div
@@ -69,7 +69,7 @@ const JigsawPuzzle: React.FC<JigsawPuzzleProps> = ({ image, size = 3, onComplete
           gap: 2,
           width: computedAreaSize,
           height: computedAreaSize,
-          opacity: completed ? 0.5 : 1,
+          opacity: 1,
           pointerEvents: completed ? 'none' : 'auto',
         }}
         aria-label="Jigsaw puzzle board"
@@ -77,6 +77,46 @@ const JigsawPuzzle: React.FC<JigsawPuzzleProps> = ({ image, size = 3, onComplete
         {order.map((pieceIdx, i) => {
           const piece = pieces[pieceIdx];
           const pieceSize = computedAreaSize / size;
+          let borders = {
+            top: '1px solid #333',
+            right: '1px solid #333',
+            bottom: '1px solid #333',
+            left: '1px solid #333',
+          };
+          const isCorrect = pieceIdx === i;
+          if (completed) {
+            borders = {
+              top: 'none',
+              right: 'none',
+              bottom: 'none',
+              left: 'none',
+            };
+          } else if (isCorrect) {
+            // Check right neighbor
+            if (piece.col < size - 1) {
+              const rightIdx = i + 1;
+              const rightPiece = pieces[order[rightIdx]];
+              if (
+                rightPiece.row === piece.row &&
+                rightPiece.col === piece.col + 1 &&
+                order[rightIdx] === rightIdx
+              ) {
+                borders.right = 'none';
+              }
+            }
+            // Check bottom neighbor
+            if (piece.row < size - 1) {
+              const bottomIdx = i + size;
+              const bottomPiece = pieces[order[bottomIdx]];
+              if (
+                bottomPiece.col === piece.col &&
+                bottomPiece.row === piece.row + 1 &&
+                order[bottomIdx] === bottomIdx
+              ) {
+                borders.bottom = 'none';
+              }
+            }
+          }
           return (
             <div
               key={i}
@@ -90,14 +130,16 @@ const JigsawPuzzle: React.FC<JigsawPuzzleProps> = ({ image, size = 3, onComplete
                 backgroundImage: `url(${image})`,
                 backgroundSize: `${size * 100}% ${size * 100}%`,
                 backgroundPosition: `${(piece.col / (size - 1)) * 100}% ${(piece.row / (size - 1)) * 100}%`,
-                border: '1px solid #333',
+                borderTop: borders.top,
+                borderRight: borders.right,
+                borderBottom: borders.bottom,
+                borderLeft: borders.left,
                 boxSizing: 'border-box',
                 cursor: completed ? 'default' : 'grab',
                 opacity: draggedIdx === i ? 0.5 : 1,
                 transition: 'opacity 0.2s',
                 outline: draggedIdx === i ? '2px solid #61dafb' : 'none',
               }}
-              aria-label={`Puzzle piece ${i + 1}`}
               tabIndex={0}
             />
           );
@@ -106,20 +148,11 @@ const JigsawPuzzle: React.FC<JigsawPuzzleProps> = ({ image, size = 3, onComplete
       {completed && (
         <div
           style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: computedAreaSize,
-            background: 'rgba(0,0,0,0.6)',
-            color: '#fff',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
+            marginTop: 16,
+            color: '#61dafb',
             fontSize: '2rem',
             fontWeight: 700,
-            borderRadius: 8,
-            zIndex: 2,
+            textAlign: 'center',
           }}
         >
           🎉 Puzzle Completed!
